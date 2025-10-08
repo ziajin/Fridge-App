@@ -6,13 +6,15 @@ import java.util.List;
 public class Fridge {
 
     private int maxSize;
+    private int size;
     protected int expiry;
 
-    protected ArrayList<Food> fridge = new ArrayList<>(maxSize);
-
+    protected ArrayList<Food> fridge;
 
     public Fridge() {
         maxSize = 30;
+        size = 0;
+        fridge = new ArrayList<>(maxSize);
     }
 
     /*
@@ -20,7 +22,13 @@ public class Fridge {
      * EFFECTS: add item to fridgeArray if there is enough space, returns true if succesful, false if not.
      */
     public boolean addItem(Food food) {
-        //stub
+        if (size + food.quantity > maxSize) {
+            return false;
+        } else {
+            fridge.add(food);
+            size += food.quantity;
+        }
+
         return false;
     }
 
@@ -28,22 +36,29 @@ public class Fridge {
      * MODIFIES: this 
      * EFFECTS: removes specified food item from fridgeArray, increases space in fridge
      */
-    public boolean removeItem(String name) {
-        //stub
-        return false;
+    public boolean removeItem(Food food) {
+        if (fridge.contains(food)) {
+        fridge.remove(food);
+        return true;
+        } else {
+            return false;
+        }
     }
 
     //EFFECTS: returns how many days the item has before expiring
-    public int ExpiryDate() {
-        //stub
-        return 0;
+    public int ExpiryDate(Food food) {
+        return food.expiryDate;
     }
 
     //MODIFIES: this
-     //EFFECTS: returns how many days the item has before expiring
-    public int ChangeExpiryData(int days) {
-        //stub
-        return 0;
+     //EFFECTS: changes how many days the item has before expiring
+    public boolean ChangeExpiryData(Food food, int days) {
+        if (food.expiryDate - Math.abs(days) < 0) {
+            return false;
+        } else { 
+            food.setExpiryDate(food.getExpiryDate() + days);
+            return true;
+        }
     }
 
     /*
