@@ -22,23 +22,30 @@ public class Fridge {
      * EFFECTS: add item to fridgeArray if there is enough space, returns true if succesful, false if not.
      */
     public boolean addItem(Food food) {
-        if (size + food.quantity > maxSize) {
+        if (size + food.getQuantity() > maxSize) {
             return false;
-        } else {
-            fridge.add(food);
-            size += food.quantity;
+        } 
+        else if (contains(food.name).equals(food)) {
+            Food temp = contains(food.name);
+            temp.setQuantity(temp.getQuantity() + food.getQuantity());
+            size += food.getQuantity();
+            return true;
         }
-
-        return false;
+        else {
+            fridge.add(food);
+            size += food.getQuantity();
+            return true;
+        }
     }
 
     /*
      * MODIFIES: this 
      * EFFECTS: removes specified food item from fridgeArray, increases space in fridge
      */
-    public boolean removeItem(Food food) {
-        if (fridge.contains(food)) {
-        fridge.remove(food);
+    public boolean removeItem(String name, int quantity) {
+        if (fridge.contains(name)) {
+        DecreaseQuantity(name, quantity);
+        size -= quantity;
         return true;
         } else {
             return false;
@@ -47,13 +54,13 @@ public class Fridge {
 
     //EFFECTS: returns how many days the item has before expiring
     public int ExpiryDate(Food food) {
-        return food.expiryDate;
+        return food.getExpiryDate();
     }
 
     //MODIFIES: this
-     //EFFECTS: changes how many days the item has before expiring
-    public boolean ChangeExpiryData(Food food, int days) {
-        if (food.expiryDate - Math.abs(days) < 0) {
+    //EFFECTS: changes how many days the item has before expiring
+    public boolean ChangeExpiryDate(Food food, int days) {
+        if (food.getExpiryDate() - Math.abs(days) < 0) {
             return false;
         } else { 
             food.setExpiryDate(food.getExpiryDate() + days);
@@ -62,12 +69,36 @@ public class Fridge {
     }
 
     /*
+     * MODIFIES: this
+     * EFFECTS: if a food is already in the fridge, add the quantities together
+     */
+    protected Food contains(String name) {
+        Food temp = null;
+        for (int i = 0; i < fridge.size(); i++) {
+            if(fridge.get(i).getName().equalsIgnoreCase(name)) {
+                temp = fridge.get(i);
+                return temp;
+            }
+        }
+        return temp;
+    }
+
+    /*
      * REQUIRES: name of valid food in fridge
      * MODIFIES: this
      * EFFECTS: decreases the number of a certain food
      */
     public void DecreaseQuantity(String name, int quantity) {
-        //stub
+        for (int i = 0; i < fridge.size(); i++) {
+            if (fridge.get(i).getName().equalsIgnoreCase(name)) {
+                Food temp = fridge.get(i);
+                if (temp.getQuantity() >= quantity) {
+                    temp.setQuantity(temp.getQuantity() - quantity);
+                    size -= temp.getExpiryDate() - quantity;
+                } //throw exception?
+                break;
+            }
+        }
     }
 
     /* REQUIRES: name of valid food in fridge
@@ -80,6 +111,10 @@ public class Fridge {
 
     public List<Food> getFridge() {
         return fridge;
+    }
+
+    public int getSize() {
+        return size;
     }
 
 
