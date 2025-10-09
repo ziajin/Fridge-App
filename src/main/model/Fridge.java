@@ -90,15 +90,12 @@ public class Fridge {
      * EFFECTS: decreases the number of a certain food
      */
     public void DecreaseQuantity(String name, int quantity) {
-        for (int i = 0; i < fridge.size(); i++) {
-            if (fridge.get(i).getName().equalsIgnoreCase(name)) {
-                Food temp = fridge.get(i);
-                if (temp.getQuantity() >= quantity) {
-                    temp.setQuantity(temp.getQuantity() - quantity);
-                    size -= temp.getExpiryDate() - quantity;
-                } //throw exception?
-                break;
-            }
+        Food food = contains(name);
+        if (food != null) {
+            if (food.getQuantity() >= quantity) {
+                 food.setQuantity(food.getQuantity() - quantity);
+                size -= food.getExpiryDate() - quantity;
+                } //throw exception?    
         }
     }
 
@@ -110,7 +107,7 @@ public class Fridge {
         //stub
     }
 
-    public List<Food> getFridge() {
+    public ArrayList<Food> getFridgeContents() {
         return fridge;
     }
 
