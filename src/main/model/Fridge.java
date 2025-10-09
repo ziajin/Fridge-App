@@ -25,17 +25,16 @@ public class Fridge {
         if (size + food.getQuantity() > maxSize) {
             return false;
         } 
-        else if (contains(food.name).equals(food)) {
-            Food temp = contains(food.name);
-            temp.setQuantity(temp.getQuantity() + food.getQuantity());
-            size += food.getQuantity();
-            return true;
+
+        Food exist = contains(food.getName());
+        if (exist != null) {
+            exist.setQuantity(exist.getQuantity() + food.getQuantity());
         }
         else {
             fridge.add(food);
-            size += food.getQuantity();
-            return true;
         }
+        size += food.getQuantity();
+        return true;
     }
 
     /*
@@ -44,9 +43,9 @@ public class Fridge {
      */
     public boolean removeItem(String name, int quantity) {
         if (fridge.contains(name)) {
-        DecreaseQuantity(name, quantity);
-        size -= quantity;
-        return true;
+            DecreaseQuantity(name, quantity);
+            size -= quantity;
+            return true;
         } else {
             return false;
         }
@@ -59,7 +58,11 @@ public class Fridge {
 
     //MODIFIES: this
     //EFFECTS: changes how many days the item has before expiring
-    public boolean ChangeExpiryDate(Food food, int days) {
+    public boolean ChangeExpiryDate(String name, int days) {
+        Food food = contains(name);
+        if (!(food instanceof Food)) {
+            return false;
+        }
         if (food.getExpiryDate() - Math.abs(days) < 0) {
             return false;
         } else { 
@@ -72,15 +75,13 @@ public class Fridge {
      * MODIFIES: this
      * EFFECTS: if a food is already in the fridge, add the quantities together
      */
-    protected Food contains(String name) {
-        Food temp = null;
-        for (int i = 0; i < fridge.size(); i++) {
-            if(fridge.get(i).getName().equalsIgnoreCase(name)) {
-                temp = fridge.get(i);
-                return temp;
+    public Food contains(String name) {
+        for (Food f : fridge) {
+            if(f.getName().equalsIgnoreCase(name)) {
+                return f;
             }
         }
-        return temp;
+        return null;
     }
 
     /*
