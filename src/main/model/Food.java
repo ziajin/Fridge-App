@@ -38,4 +38,8 @@ public class Food {
         this.name = name;
     }
 
+    //EFFECTS: prints summary of item
+    public String toString() {
+        return "Name:" + getName() + "\tQuantity: " + getQuantity() + "\tExpiry Date: " + getExpiryDate() + "\n";
+    }
 }
