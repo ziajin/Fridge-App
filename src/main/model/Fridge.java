@@ -94,7 +94,7 @@ public class Fridge {
         if (food != null) {
             if (food.getQuantity() >= quantity) {
                  food.setQuantity(food.getQuantity() - quantity);
-                size -= food.getExpiryDate() - quantity;
+                size -= food.getQuantity() - quantity;
                 } //throw exception?    
         }
     }
