@@ -36,7 +36,9 @@ public class FrozenTest {
         testFood2.refreeze(testFood);
         assertTrue(testFood2.getFrozen());
         testFood2.refreeze(testFood);
-        assertTrue(testFood2.getFrozen());
+        testFood2.thaw(testFood2);
+        assertFalse(testFood2.getFrozen());
+        testFood2.refreeze(testFood2);
     }
 
     @Test
