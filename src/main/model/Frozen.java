@@ -24,10 +24,13 @@ public class Frozen extends Food {
     /*
      * REQUIRES: valid frozen food item
      * MODIFIES: this
-     * EFFECTS: changes frozen boolean value to false
+     * EFFECTS: changes frozen boolean value to false and decrements the expiry date
      */
     public void thaw(Food f) {
-        //stub
+        if (frozen) {
+            frozen = false;
+            expiryDate--;
+        }
     }
 
     /*
@@ -36,14 +39,20 @@ public class Frozen extends Food {
      * EFFECTS: changes frozen boolean value to true
      */
     public void refreeze(Food f) {
-        //stub
+        if (!frozen) {
+            frozen = true;
+        }
+    }
+
+    public boolean getFrozen() {
+        return frozen;
     }
 
     /*
      * EFFECTS: returns string representation of the frozen object
      */
     public String toString() {
-        //stub
+        return "Name: " + getName() + "\tQuantity: " + getQuantity() + "\t Expiry Date: " + getExpiryDate() + " Frozen: " + getFrozen() + "\n";
     }
 
 
