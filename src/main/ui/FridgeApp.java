@@ -2,9 +2,16 @@ package ui;
 
 import model.Food;
 import model.Fridge;
+import model.Frozen;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+/*
+ * FridgeApp class handles the user input and displays options on the console. 
+ * The fridge app allows the user to interact with the fridge class and modify it
+ * as wanted.
+ */
 
 public class FridgeApp {
 
@@ -56,6 +63,8 @@ public class FridgeApp {
         System.out.println("r)\t Remove Item");
         System.out.println("c)\t Change Item Expiry Date");
         System.out.println("v)\t View Fridge");
+        System.out.println("v2)\t View Freezer");
+        System.out.println("v3)\t View Soon to Expire");
         System.out.println("q)\t Close Fridge");
     }
 
@@ -70,6 +79,10 @@ public class FridgeApp {
             changeExpiryDate();
         } else if (input.equalsIgnoreCase("v")) {
             viewFridge();
+        } else if (input.equalsIgnoreCase("v2")) {
+            viewFreezer();
+        } else if (input.equalsIgnoreCase("v3")) {
+            displaySoonExpired();
         } else if (input.equalsIgnoreCase("q")) {
             open = false;
             printGoodbye();
@@ -97,14 +110,31 @@ public class FridgeApp {
     }
 
     /*
+     * REQUIRES: valid input from the user, name not empty, quantity > 0, expiry date > 0
+     * MODIFIES: this
+     * EFFECTS: takes user input to create a valid food object
+     */
+    private Food getParametersFood() {
+
+    }
+
+    /*
+     * REQUIRES: valid input from the user, name not empty, quantity > 0, expiry date > 0
+     * MODIFIES: this
+     * EFFECTS: takes user input to create a valid frozen object
+     */
+    private Food getParametersFrozen() {
+
+    }
+
+    /*
      * REQUIRES: valid parameters
      * MODIFIES: this
      * EFFECTS: creates new food item and stores it in freezerFoods array
      */
-    private Food createFreezerItem(String name, int quantity, int expiry) {
-        Food f = new Food(name, quantity, expiry);
+    private Food createFreezerItem(String name, int quantity, int expiry, boolean frozen) {
+        Food f = new Frozen(name, quantity, expiry, frozen);
         return f;
-        //stub
     }
 
     /*
@@ -190,6 +220,11 @@ public class FridgeApp {
     //EFFECTS: prints contents of fridge 
     private void viewFridge() {
         System.out.print(fridgeFoods.getFridgeContents());
+    }
+
+    //EFFECTS: prints contents of fridge 
+    private void viewFreezer() {
+        System.out.print(freezerFoods.getFridgeContents());
     }
      
 }

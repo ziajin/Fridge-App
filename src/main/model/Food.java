@@ -1,18 +1,22 @@
 package model;
 
+/*
+ * represents a general food item with properties such as name, quantity, and the
+ * days until the expiry. provides basic food methods for its subclasses (Frozen, Fruit) such as getters
+ * and setters for the variables and a toString.
+ */
+
 public class Food {
 
     protected int quantity;
     protected int expiryDate;
     protected String name;
 
-
     public Food(String name, int quantity, int expiryDate) {
         this.name = name;
         this.expiryDate = expiryDate;
         this.quantity = quantity;
     }
-
 
     public int getQuantity() {
         return quantity;
