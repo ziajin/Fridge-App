@@ -1,15 +1,13 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Fridge {
 
     private int maxSize;
     private int size;
-    protected int expiry;
 
-    protected ArrayList<Food> fridge;
+    private ArrayList<Food> fridge;
 
     public Fridge() {
         maxSize = 30;
@@ -25,8 +23,7 @@ public class Fridge {
         if (size + food.getQuantity() > maxSize) {
             return false;
         } 
-
-        Food exist = contains(food.getName());
+        Food exist = fridgeContains(food.getName());
         if (exist != null) {
             exist.setQuantity(exist.getQuantity() + food.getQuantity());
         }
@@ -42,25 +39,22 @@ public class Fridge {
      * EFFECTS: removes specified food item from fridgeArray, increases space in fridge
      */
     public boolean removeItem(String name, int quantity) {
-        if (fridge.contains(name)) {
+        if (fridgeContains(name) != null) {
+            if (fridgeContains(name).getQuantity() < quantity) {
+                return false;
+            }
             DecreaseQuantity(name, quantity);
-            size -= quantity;
             return true;
         } else {
             return false;
         }
     }
 
-    //EFFECTS: returns how many days the item has before expiring
-    public int ExpiryDate(Food food) {
-        return food.getExpiryDate();
-    }
-
     //MODIFIES: this
     //EFFECTS: changes how many days the item has before expiring
     public boolean ChangeExpiryDate(String name, int days) {
-        Food food = contains(name);
-        if (!(food instanceof Food)) {
+        Food food = fridgeContains(name);
+        if (food == null) {
             return false;
         }
         if (food.getExpiryDate() - Math.abs(days) < 0) {
@@ -75,7 +69,7 @@ public class Fridge {
      * MODIFIES: this
      * EFFECTS: if a food is already in the fridge, add the quantities together
      */
-    public Food contains(String name) {
+    public Food fridgeContains(String name) {
         for (Food f : fridge) {
             if(f.getName().equalsIgnoreCase(name)) {
                 return f;
@@ -90,21 +84,13 @@ public class Fridge {
      * EFFECTS: decreases the number of a certain food
      */
     public void DecreaseQuantity(String name, int quantity) {
-        Food food = contains(name);
+        Food food = fridgeContains(name);
         if (food != null) {
             if (food.getQuantity() >= quantity) {
                  food.setQuantity(food.getQuantity() - quantity);
-                size -= food.getQuantity() - quantity;
+                size -= quantity;
                 } //throw exception?    
         }
-    }
-
-    /* REQUIRES: name of valid food in fridge
-     * MODIFIES: this
-     * EFFECTS: decreases the number of a certain food
-     */
-    public void IncreaseQuantity(String name, int quantity) {
-        //stub
     }
 
     public ArrayList<Food> getFridgeContents() {
