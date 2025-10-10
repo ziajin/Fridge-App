@@ -52,7 +52,11 @@ public class Frozen extends Food {
      * EFFECTS: returns string representation of the frozen object
      */
     public String toString() {
-        return "Name: " + getName() + "\tQuantity: " + getQuantity() + "\t Expiry Date: " + getExpiryDate() + " Frozen: " + getFrozen() + "\n";
+        String name = "Name: " + getName();
+        String quantity = "\tQuantity: " + getQuantity();
+        String expiry = "\t Expiry Date: " + getExpiryDate();
+        String frozen = " Frozen: " + getFrozen() + "\n";
+        return name + quantity + expiry + frozen;
     }
 
 

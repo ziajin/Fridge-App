@@ -203,11 +203,11 @@ public class FridgeApp {
                 expiry = Integer.parseInt(input.nextLine());
                 System.out.println("Is this item ripe? (Y/N): ");
                 userInput = input.nextLine();
-                    if (userInput.equalsIgnoreCase("y")) {
-                        ripe = true;
-                    } else {
-                        ripe = false;
-                    }
+                if (userInput.equalsIgnoreCase("y")) {
+                    ripe = true;
+                } else {
+                    ripe = false;
+                }
                 break;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Try again.\n");
@@ -218,8 +218,8 @@ public class FridgeApp {
     }
 
     //MODIFIES: this
-    //EFFECTS: adds item to fridge if it is a food object, adds to fridge if its a fruit, adds to freezer array if it is a frozen food.
-    // prints to console error message if food is not added succesfully.
+    //EFFECTS: adds item to fridge if it is a food object, adds to fridge if its a fruit, adds to freezer array
+    //if it is a frozen food. prints to console error message if food is not added succesfully.
     private void doAddItem(Food food) {
         boolean added = false;
         if (food instanceof Frozen) {

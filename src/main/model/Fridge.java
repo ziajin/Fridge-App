@@ -28,7 +28,7 @@ public class Fridge {
     public boolean addItem(Food food) {
         if (size + food.getQuantity() > maxSize) {
             return false;
-        } 
+        }
         Food exist = fridgeContains(food.getName());
         if (exist != null) {
             exist.setQuantity(exist.getQuantity() + food.getQuantity());
@@ -43,8 +43,8 @@ public class Fridge {
      * REQUIRES: valid input for name nad quantity
      * MODIFIES: this 
      * EFFECTS: checks that the name is a valid item in the fridge. checks that the quantity to remove is
-     * valid (eg. not more than the number of that item), returns false if it is. calls the decreaseQuantity method if valid 
-     * quantity
+     * valid (eg. not more than the number of that item), returns false if it is. calls the decreaseQuantity 
+     * method if valid quantity
      */
     public boolean removeItem(String name, int quantity) {
         Food food = fridgeContains(name);
