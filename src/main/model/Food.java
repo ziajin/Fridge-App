@@ -7,7 +7,7 @@ public class Food {
     protected String name;
 
 
-    public Food (String name, int quantity, int expiryDate) {
+    public Food(String name, int quantity, int expiryDate) {
         this.name = name;
         this.expiryDate = expiryDate;
         this.quantity = quantity;
