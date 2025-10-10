@@ -30,12 +30,12 @@ public class FridgeApp {
 
         printWelcome();
 
-        while(open) {
-             display();
-             userInput = input.nextLine();
-             excecuteOptions(userInput);
-            }
+        while (open) {
+            display();
+            userInput = input.nextLine();
+            excecuteOptions(userInput);
         }
+    }
 
     //EFFECTS: Prints welcome message
     private void printWelcome() {
@@ -59,20 +59,16 @@ public class FridgeApp {
 
     //REQUIRES: expected string output
     //EFFECTS: carries out the user's choice from display
-    private void excecuteOptions(String input){
+    private void excecuteOptions(String input) {
         if (input.equalsIgnoreCase("a")) {
             doAddItem(createFood());
-        }
-        else if (input.equalsIgnoreCase("r")) {
+        } else if (input.equalsIgnoreCase("r")) {
             doRemoveItem();
-        }
-        else if (input.equalsIgnoreCase("c")) {
-            ChangeExpiryDate();
-        }
-        else if (input.equalsIgnoreCase("v")) {
+        } else if (input.equalsIgnoreCase("c")) {
+            changeExpiryDate();
+        } else if (input.equalsIgnoreCase("v")) {
             viewFridge();
-        }
-        else if (input.equalsIgnoreCase("q")) {
+        } else if (input.equalsIgnoreCase("q")) {
             open = false;
             printGoodbye();
         }
@@ -110,7 +106,7 @@ public class FridgeApp {
 
         Food temp = fridgeFoods.fridgeContains(name);
 
-        if(temp != null) {
+        if (temp != null) {
             System.out.println("How many of this item would you like to remove?: ");
             System.out.println("Current item quantity: " + temp.getQuantity());
             try {
@@ -128,14 +124,14 @@ public class FridgeApp {
      * MODIFIES: this
      * EFFECTS: changes expiry date
      */
-    private void ChangeExpiryDate() {
+    private void changeExpiryDate() {
         System.out.println("What item would you like to change?: ");
         viewFridge();
         name = input.nextLine();
 
         System.out.println("Increase or decrease number of days until expiry? (I/D): ");
 
-        while(true) {
+        while (true) {
             String answer = input.nextLine();
             if ((answer.equalsIgnoreCase("i"))) {
                 System.out.println("Increase by how many days?: ");
@@ -148,7 +144,7 @@ public class FridgeApp {
                 fridgeFoods.changeExpiryDate(name, expiry);
                 break;        
             } else {
-            System.out.println("Invalid Input. Try again. (I/D)");
+                System.out.println("Invalid Input. Try again. (I/D)");
             }
         }
     }
