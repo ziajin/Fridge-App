@@ -21,6 +21,7 @@ public class FridgeApp {
 
     public FridgeApp() {
         fridgeFoods = new Fridge();
+        freezerFoods = new Fridge();
         input = new Scanner(System.in);
         runFridge();
     }
