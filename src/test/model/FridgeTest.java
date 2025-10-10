@@ -63,9 +63,9 @@ public class FridgeTest {
     void TestExpriryDate() {
         test.addItem(testFood);
         assertEquals(2, test.getFridgeContents().get(0).getExpiryDate());
-        assertFalse(test.ChangeExpiryDate(testFood.getName(), 4));
-        assertFalse(test.ChangeExpiryDate("notFood", 1));
-        assertTrue(test.ChangeExpiryDate(testFood.getName(), 1));
+        assertFalse(test.changeExpiryDate(testFood.getName(), 4));
+        assertFalse(test.changeExpiryDate("notFood", 1));
+        assertTrue(test.changeExpiryDate(testFood.getName(), 1));
         assertEquals(3, test.getFridgeContents().get(0).getExpiryDate());
     }
 
@@ -73,11 +73,11 @@ public class FridgeTest {
     void TestChangeQuantity() {
         test.addItem(testFood);
         assertEquals(4, test.getFridgeContents().get(0).getQuantity());
-        test.DecreaseQuantity(testFood.getName(), 1);
+        test.decreaseQuantity(testFood.getName(), 1);
         assertEquals(3, test.getFridgeContents().get(0).getQuantity());
-        test.DecreaseQuantity(testFood.getName(), 10);
+        test.decreaseQuantity(testFood.getName(), 10);
         assertEquals(3, test.getFridgeContents().get(0).getQuantity());
-        test.DecreaseQuantity("test", 1);
+        test.decreaseQuantity("test", 1);
     }
 
 

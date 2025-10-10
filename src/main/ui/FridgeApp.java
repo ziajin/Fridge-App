@@ -2,6 +2,8 @@ package ui;
 
 import model.Food;
 import model.Fridge;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class FridgeApp {
@@ -47,7 +49,7 @@ public class FridgeApp {
 
     //EFFECTS: displays options to user
     private void display() {
-        System.out.println("\tOptions: ");
+        System.out.println("\n\nOptions: ");
         System.out.println("a)\t Add Item");
         System.out.println("r)\t Remove Item");
         System.out.println("c)\t Change Item Expiry Date");
@@ -84,7 +86,8 @@ public class FridgeApp {
         quantity = input.nextInt();
         System.out.println("In how many days does this item expire?: ");
         expiry = input.nextInt();
-        Food food = new Food(name, expiry, quantity);
+        input.nextLine();
+        Food food = new Food(name, quantity, expiry);
         return food;
     }
 
@@ -92,7 +95,7 @@ public class FridgeApp {
     //EFFECTS: adds item to fridge
     private void doAddItem(Food food) {
         if (fridgeFoods.addItem(food)) {
-            System.out.println("Item added! \t Remaining space in fridge: " + fridgeFoods.getSize());
+            System.out.println("Item added! \t Remaining space in fridge: " + fridgeFoods.getRemainingSpace());
         } else {
             System.out.println("Not enough space in fridge!");
         }
@@ -110,8 +113,12 @@ public class FridgeApp {
         if(temp != null) {
             System.out.println("How many of this item would you like to remove?: ");
             System.out.println("Current item quantity: " + temp.getQuantity());
-            quantity = input.nextInt();
-            fridgeFoods.DecreaseQuantity(name, quantity);
+            try {
+                quantity = input.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid Input. Try again.");
+            }
+            fridgeFoods.decreaseQuantity(name, quantity);
         } else {
             System.out.println("No such item in fridge.");
         }
@@ -133,12 +140,12 @@ public class FridgeApp {
             if ((answer.equalsIgnoreCase("i"))) {
                 System.out.println("Increase by how many days?: ");
                 expiry = input.nextInt();
-                fridgeFoods.ChangeExpiryDate(name, expiry);
+                fridgeFoods.changeExpiryDate(name, expiry);
                 break;
             } else if (answer.equalsIgnoreCase("d")) {
                 System.out.println("Decrease by how many days?: ");
                 expiry = input.nextInt() * -1;
-                fridgeFoods.ChangeExpiryDate(name, expiry);
+                fridgeFoods.changeExpiryDate(name, expiry);
                 break;        
             } else {
             System.out.println("Invalid Input. Try again. (I/D)");
