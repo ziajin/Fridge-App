@@ -3,6 +3,7 @@ package ui;
 import model.Food;
 import model.Fridge;
 import model.Frozen;
+import model.Fruit;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -19,9 +20,11 @@ public class FridgeApp {
     private Fridge fridgeFoods;
     private Fridge freezerFoods;
     private String name;
-    String userInput;
+    private String userInput;
+
     private int expiry;
     private int quantity;
+    private boolean ripe;
 
     
     private boolean open = true;
@@ -58,14 +61,14 @@ public class FridgeApp {
 
     //EFFECTS: displays options to user
     private void display() {
-        System.out.println("\n\nOptions: ");
+        System.out.println("\nOptions: ");
         System.out.println("a)\t Add Item");
         System.out.println("r)\t Remove Item");
         System.out.println("c)\t Change Item Expiry Date");
         System.out.println("v)\t View Fridge");
         System.out.println("v2)\t View Freezer");
         System.out.println("v3)\t View Soon to Expire");
-        System.out.println("q)\t Close Fridge");
+        System.out.println("q)\t Close Fridge\n");
     }
 
     //REQUIRES: expected string output
@@ -79,6 +82,7 @@ public class FridgeApp {
             changeExpiryDate();
         } else if (input.equalsIgnoreCase("v")) {
             viewFridge();
+            System.out.println();
         } else if (input.equalsIgnoreCase("v2")) {
             viewFreezer();
         } else if (input.equalsIgnoreCase("v3")) {
@@ -91,22 +95,20 @@ public class FridgeApp {
 
     //EFFECTS: creates food item
     private Food createFood() {
-        while (true) {
-        try {
-            System.out.println("What is the foods name?: ");
-            name = input.nextLine();
-            System.out.println("How many of this item?: ");
-            quantity = input.nextInt();
-            System.out.println("In how many days does this item expire?: ");
-            expiry = input.nextInt();
-            input.nextLine();
-            break;
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid input. Try again.");
-            }
-        } 
-        Food food = new Food(name, quantity, expiry);
-        return food;
+        System.out.println("What category is this food?");
+        System.out.println("1) General Food");
+        System.out.println("2) Frozen Food");
+        System.out.println("3) Fruit/Veg");
+        userInput = input.nextLine();
+        if (userInput.equalsIgnoreCase("1")) {
+            return getParamters();
+        } else if (userInput.equalsIgnoreCase("2")) {
+            return getParametersFrozen();
+        } else if (userInput.equalsIgnoreCase("3")) {
+            return getFruitParameters();
+        } else {
+            return null;
+        }
     }
 
     /*
@@ -114,8 +116,52 @@ public class FridgeApp {
      * MODIFIES: this
      * EFFECTS: takes user input to create a valid food object
      */
-    private Food getParametersFood() {
+    // private Food getParametersFood() {
+    //     while (true) {
+    //         try {
+    //             System.out.println("What is the foods name?: ");
+    //             name = input.nextLine();
+    //                 if (name.isBlank()) {
+    //                     System.out.println("Name is empty. Try again. \n");
+    //                     continue;
+    //                 }
+    //             System.out.println("How many of this item?: ");
+    //             quantity = input.();
+    //                 if (quantity <= 0) {
+    //                     System.out.println("Quantity cannot be zero. Try again. \n");
+    //                     input.nextLine();
+    //                     continue;
+    //                 }
+    //             System.out.println("In how many days does this item expire?: ");
+    //             expiry = input.nextInt();
+    //                 if (expiry < 0) {
+    //                     System.out.println("Expiry days cannot be negative. Try again. \n");
+    //                     continue;
+    //                 }
+    //             input.nextLine();
+    //             break;
+    //     } catch (InputMismatchException e) {
+    //         System.out.println("Invalid input. Try again.");
+    //         }
+    //     }
+    // }
 
+    private Food getParamters() {
+        while (true) {
+            try {
+                System.out.println("What is the foods name?: ");
+                name = input.nextLine();
+                System.out.println("How many of this item?: ");
+                quantity = Integer.parseInt(input.nextLine());
+                System.out.println("In how many days does this item expire?: ");
+                expiry = Integer.parseInt(input.nextLine());
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Try again.\n");
+            }
+        }
+        Food f = new Food(name, quantity, expiry);
+        return f;
     }
 
     /*
@@ -124,16 +170,20 @@ public class FridgeApp {
      * EFFECTS: takes user input to create a valid frozen object
      */
     private Food getParametersFrozen() {
-
-    }
-
-    /*
-     * REQUIRES: valid parameters
-     * MODIFIES: this
-     * EFFECTS: creates new food item and stores it in freezerFoods array
-     */
-    private Food createFreezerItem(String name, int quantity, int expiry, boolean frozen) {
-        Food f = new Frozen(name, quantity, expiry, frozen);
+        while (true) {
+            try {
+                System.out.println("What is the foods name?: ");
+                name = input.nextLine();
+                System.out.println("How many of this item?: ");
+                quantity = Integer.parseInt(input.nextLine());
+                System.out.println("In how many days does this item expire?: ");
+                expiry = Integer.parseInt(input.nextLine());
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Try again.\n");
+            }
+        }
+        Food f = new Frozen(name, quantity, expiry, true);
         return f;
     }
 
@@ -142,21 +192,52 @@ public class FridgeApp {
      * MODIFIES: this
      * EFFECTS: creates new fruit item and stores it in fridgeFoods array
      */
-    private Food createFruit(String name, int quantity, int expiry, boolean ripe) {
-        Food f = new Food(name, quantity, expiry);
+    private Food getFruitParameters() {
+        while (true) {
+            try {
+                System.out.println("What is the foods name?: ");
+                name = input.nextLine();
+                System.out.println("How many of this item?: ");
+                quantity = Integer.parseInt(input.nextLine());
+                System.out.println("In how many days does this item expire?: ");
+                expiry = Integer.parseInt(input.nextLine());
+                System.out.println("Is this item ripe? (Y/N): ");
+                userInput = input.nextLine();
+                    if (userInput.equalsIgnoreCase("y")) {
+                        ripe = true;
+                    } else {
+                        ripe = false;
+                    }
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Try again.\n");
+            }
+        }
+        Food f = new Fruit(name, quantity, expiry, ripe);
         return f;
-        //stub
     }
 
     //MODIFIES: this
-    //EFFECTS: adds item to fridge
+    //EFFECTS: adds item to fridge if it is a food object, adds to fridge if its a fruit, adds to freezer array if it is a frozen food.
+    // prints to console error message if food is not added succesfully.
     private void doAddItem(Food food) {
-        if (fridgeFoods.addItem(food)) {
-            System.out.println("Item added! \t Remaining space in fridge: " + fridgeFoods.getRemainingSpace());
+        boolean added = false;
+        if (food instanceof Frozen) {
+            added = freezerFoods.addItem(food);
+            if (added) {
+                System.out.println("Item added! \t Remaining space in fridge: " + freezerFoods.getRemainingSpace());
+            }
         } else {
-            System.out.println("Not enough space in fridge!");
+            added = fridgeFoods.addItem(food);
+            if (added) {
+                System.out.println("Item added! \t Remaining space in fridge: " + fridgeFoods.getRemainingSpace());
+            }
+        }
+        if (!added) {
+            System.out.println("Not enough space in the fridge, please remove something.");
         }
     }
+
 
     //MODIFIES: this
     //EFFECTS: removes item from fridge
@@ -171,7 +252,7 @@ public class FridgeApp {
             System.out.println("How many of this item would you like to remove?: ");
             System.out.println("Current item quantity: " + temp.getQuantity());
             try {
-                quantity = input.nextInt();
+                quantity = Integer.parseInt(input.nextLine());
             } catch (InputMismatchException e) {
                 System.out.println("Invalid Input. Try again.");
             }
@@ -196,12 +277,12 @@ public class FridgeApp {
             String answer = input.nextLine();
             if ((answer.equalsIgnoreCase("i"))) {
                 System.out.println("Increase by how many days?: ");
-                expiry = input.nextInt();
+                expiry = Integer.parseInt(input.nextLine());
                 fridgeFoods.changeExpiryDate(name, expiry);
                 break;
             } else if (answer.equalsIgnoreCase("d")) {
                 System.out.println("Decrease by how many days?: ");
-                expiry = input.nextInt() * -1;
+                expiry = Integer.parseInt(input.nextLine());
                 fridgeFoods.changeExpiryDate(name, expiry);
                 break;        
             } else {
@@ -214,7 +295,11 @@ public class FridgeApp {
      * EFFECTS: displays foods with an expiry date of less than 3 days
      */
     public void displaySoonExpired() {
-
+        for (Food f : fridgeFoods.getFridgeContents()) {
+            if (f.getExpiryDate() < 2) {
+                System.out.println(f);
+            }
+        }
     }
 
     //EFFECTS: prints contents of fridge 
@@ -226,5 +311,14 @@ public class FridgeApp {
     private void viewFreezer() {
         System.out.print(freezerFoods.getFridgeContents());
     }
+
+    //EFFECTS: prints out fridge contents but only fruit
+    // private void viewFruit() {
+    //     for (Food f : fridgeFoods.getFridgeContents()) {
+    //         if (f instanceof Fruit) {
+    //             System.out.println(f);
+    //         }
+    //     }
+    // }
      
 }
