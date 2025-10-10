@@ -105,7 +105,7 @@ public class FridgeApp {
         viewFridge();
         name = input.nextLine();
 
-        Food temp = fridgeFoods.contains(name);
+        Food temp = fridgeFoods.fridgeContains(name);
 
         if(temp != null) {
             System.out.println("How many of this item would you like to remove?: ");
