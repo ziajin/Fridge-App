@@ -16,8 +16,8 @@ public class FridgeTest {
     @BeforeEach 
     void RunBefore() {
         test = new Fridge();
-        testFood = new Food("Berry", 4, 2);
-        testFood2 = new Food("Celery", 2, 6);
+        testFood = new Food("Chicken", 4, 2);
+        testFood2 = new Food("Milk", 2, 6);
         testFood3 = new Food("Potato", 10, 20);
     }
 
@@ -44,6 +44,9 @@ public class FridgeTest {
         assertEquals(4, test.getSize());
         test.addItem(testFood3); //14
         test.addItem(testFood3); //24
+        test.addItem(testFood3); //34
+        test.addItem(testFood3); //44
+        test.addItem(testFood3); //54
         assertFalse(test.addItem(testFood3));
     }
 
@@ -77,7 +80,7 @@ public class FridgeTest {
         assertEquals(3, test.getFridgeContents().get(0).getQuantity());
         test.decreaseQuantity(testFood.getName(), 10);
         assertEquals(3, test.getFridgeContents().get(0).getQuantity());
-        test.decreaseQuantity("test", 1);
+        test.decreaseQuantity(testFood, 1);
     }
 
 
