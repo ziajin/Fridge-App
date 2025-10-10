@@ -10,6 +10,7 @@ public class FridgeApp {
 
     private Scanner input;
     private Fridge fridgeFoods;
+    private Fridge freezerFoods;
     private String name;
     String userInput;
     private int expiry;
@@ -76,15 +77,44 @@ public class FridgeApp {
 
     //EFFECTS: creates food item
     private Food createFood() {
-        System.out.println("What is the foods name?: ");
-        name = input.nextLine();
-        System.out.println("How many of this item?: ");
-        quantity = input.nextInt();
-        System.out.println("In how many days does this item expire?: ");
-        expiry = input.nextInt();
-        input.nextLine();
+        while (true) {
+        try {
+            System.out.println("What is the foods name?: ");
+            name = input.nextLine();
+            System.out.println("How many of this item?: ");
+            quantity = input.nextInt();
+            System.out.println("In how many days does this item expire?: ");
+            expiry = input.nextInt();
+            input.nextLine();
+            break;
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Try again.");
+            }
+        } 
         Food food = new Food(name, quantity, expiry);
         return food;
+    }
+
+    /*
+     * REQUIRES: valid parameters
+     * MODIFIES: this
+     * EFFECTS: creates new food item and stores it in freezerFoods array
+     */
+    private Food createFreezerItem(String name, int quantity, int expiry) {
+        Food f = new Food(name, quantity, expiry);
+        return f;
+        //stub
+    }
+
+    /*
+     * REQUIRES: valid parameters
+     * MODIFIES: this
+     * EFFECTS: creates new fruit item and stores it in fridgeFoods array
+     */
+    private Food createFruit(String name, int quantity, int expiry, boolean ripe) {
+        Food f = new Food(name, quantity, expiry);
+        return f;
+        //stub
     }
 
     //MODIFIES: this
@@ -147,6 +177,13 @@ public class FridgeApp {
                 System.out.println("Invalid Input. Try again. (I/D)");
             }
         }
+    }
+
+    /*
+     * EFFECTS: displays foods with an expiry date of less than 3 days
+     */
+    public void displaySoonExpired() {
+
     }
 
     //EFFECTS: prints contents of fridge 
