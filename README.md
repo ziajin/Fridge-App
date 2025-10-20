@@ -9,7 +9,13 @@ This project is of interest to me because I recently started cooking for myself 
 This application is designed for anyone who struggles with keeping track of what perishables are in their fridge and using them before they spoil. Speficially, this application can be of help for new cooks, such as students, who want to better plan their meals, reduce food waste, and manage their produce.
 
 ## User Stories
- - As a user, I want to be able to add items to my digital fridge
+
+ - As a user, I want to be able to add multiple items to my digital fridge
  - As a user, I want to see what is already in my digital fridge
  - As a user, I want to use up items in my digital fridge
  - As a user, I want to generally categorize the items in my digital fridge (frozen, dairy, fruits, etc)
+
+# Phase 2
+
+ - As a user I want the choice to save my fridge with all food items remaining in the same state to file
+ - As a user I want the option to load my fridge and see my fridge in the same state from file
