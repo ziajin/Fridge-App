@@ -26,7 +26,7 @@ public class Fridge {
      * EFFECTS: add item to fridgeArray if there is enough space, returns true if succesful, false if not.
      */
     public boolean addItem(Food food) {
-        if (size + food.getQuantity() > maxSize) {
+        if (food.getQuantity() > getRemainingSpace()) {
             return false;
         }
         Food exist = fridgeContains(food.getName());
@@ -90,9 +90,9 @@ public class Fridge {
     }
 
     /*
-     * REQUIRES: name of valid food in fridge
+     * REQUIRES: valid food object in fridge and quantity >0
      * MODIFIES: this
-     * EFFECTS: decreases the number of a certain food
+     * EFFECTS: decreases the quantity variable of a certain food
      */
     public void decreaseQuantity(Food food, int quantity) {
         if (food.getQuantity() >= quantity) {
@@ -105,17 +105,22 @@ public class Fridge {
         } //throw exception?    
     }
 
-    public void decreaseQuantity(String name, int quantity) {
-        Food food = fridgeContains(name);
-        if (food.getQuantity() >= quantity) {
-            food.setQuantity(food.getQuantity() - quantity);
-            size -= quantity;
+    /*
+     * REQUIRES: name of valid food in fridge and quantity >0
+     * MODIFIES: this
+     * EFFECTS: decreases the quantity variable of a certain food
+     */
+    // public void decreaseQuantity(String name, int quantity) {
+    //     Food food = fridgeContains(name);
+    //     if (food.getQuantity() >= quantity) {
+    //         food.setQuantity(food.getQuantity() - quantity);
+    //         size -= quantity;
 
-            if (food.getQuantity() == 0) {
-                fridge.remove(food);
-            }
-        } //throw exception?    
-    }
+    //         if (food.getQuantity() == 0) {
+    //             fridge.remove(food);
+    //         }
+    //     } //throw exception?    
+    // }
 
     public ArrayList<Food> getFridgeContents() {
         return fridge;
