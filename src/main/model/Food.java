@@ -38,10 +38,6 @@ public class Food {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     //EFFECTS: prints summary of item
     public String toString() {
         return "Name: " + getName() + "\tQuantity: " + getQuantity() + "\tExpiry Date: " + getExpiryDate() + "\n";
