@@ -60,6 +60,18 @@ public class FridgeTest {
         assertEquals(2, test.getFridgeContents().get(0).getQuantity());
         assertFalse(test.removeItem(testFood.getName(), 100));
         assertFalse(test.removeItem("fakeName", 1));
+        assertFalse(test.removeItem(testFood.getName(), 100));
+    }
+
+    @Test
+    void TestRemoveItemQuantityReachZero() {
+        test.addItem(testFood);
+        assertEquals(testFood, test.getFridgeContents().get(0));
+        test.removeItem(testFood.getName(), 0);
+        assertEquals(4, test.getFridgeContents().get(0).getQuantity());
+        test.removeItem(testFood.getName(), 4);
+        assertEquals(0, test.getSize());
+        assertTrue(test.getFridgeContents().isEmpty());
     }
     
     @Test
@@ -76,9 +88,9 @@ public class FridgeTest {
     void TestChangeQuantity() {
         test.addItem(testFood);
         assertEquals(4, test.getFridgeContents().get(0).getQuantity());
-        test.decreaseQuantity(testFood.getName(), 1);
+        test.decreaseQuantity(testFood, 1);
         assertEquals(3, test.getFridgeContents().get(0).getQuantity());
-        test.decreaseQuantity(testFood.getName(), 10);
+        test.decreaseQuantity(testFood, 10);
         assertEquals(3, test.getFridgeContents().get(0).getQuantity());
         test.decreaseQuantity(testFood, 1);
     }

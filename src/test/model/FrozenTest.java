@@ -48,4 +48,15 @@ public class FrozenTest {
         test.addItem(testFood2);
         assertEquals(20, test.getFridgeContents().get(0).getQuantity());
     }
+
+    @Test
+    void toStringTest() {
+        int quantity = testFood2.getQuantity();
+        int date =  testFood2.getExpiryDate();
+        String name = testFood2.getName();
+        String frozen = testFood2.getFrozen() + "\n";
+        String test = "Name: " + name + "\tQuantity: " + quantity + "\tExpiry Date: " + date + " Frozen: " + frozen;
+        assertEquals(test, testFood2.toString());
+
+    }
 }
