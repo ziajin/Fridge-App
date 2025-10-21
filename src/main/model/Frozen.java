@@ -54,7 +54,7 @@ public class Frozen extends Food {
     public String toString() {
         String name = "Name: " + getName();
         String quantity = "\tQuantity: " + getQuantity();
-        String expiry = "\t Expiry Date: " + getExpiryDate();
+        String expiry = "\tExpiry Date: " + getExpiryDate();
         String frozen = " Frozen: " + getFrozen() + "\n";
         return name + quantity + expiry + frozen;
     }
