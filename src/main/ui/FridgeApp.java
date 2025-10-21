@@ -256,7 +256,7 @@ public class FridgeApp {
             } catch (InputMismatchException e) {
                 System.out.println("Invalid Input. Try again.");
             }
-            fridgeFoods.decreaseQuantity(name, quantity);
+            fridgeFoods.decreaseQuantity(temp, quantity);
         } else {
             System.out.println("No such item in fridge.");
         }
