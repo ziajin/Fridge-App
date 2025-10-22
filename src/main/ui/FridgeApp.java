@@ -8,12 +8,15 @@ import model.Fruit;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
+
 /*
  * FridgeApp class handles the user input and displays options on the console. 
  * The fridge app allows the user to interact with the fridge class and modify it
  * as wanted.
  */
 
+@ExcludeFromJacocoGeneratedReport
 public class FridgeApp {
 
     private Scanner input;
