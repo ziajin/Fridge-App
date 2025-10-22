@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 /*
  * represents a food object that is of a fuit variety, inheriting all methods form the
  * food superclass with addtional methods determing if the fruit is ripe. 
@@ -35,6 +37,13 @@ public class Fruit extends Food {
         } else {
             setExpiryDate(5);
         }
+    }
+    
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = super.toJson();
+        json.put("Ripe", isRipe());
+        return json;
     }
 
 }

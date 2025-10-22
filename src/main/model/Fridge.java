@@ -1,13 +1,16 @@
 package model;
 
 import java.util.ArrayList;
+import org.json.JSONObject;
+import org.json.JSONArray;
+import persistence.Writable;
 
 /*
  * represents a fridge object that stores food objects in an ArrayList. provides implementation
  * of methods such as add/remove item, change expiry date, view contents of the ArrayList, etc.
  */
 
-public class Fridge {
+public class Fridge implements Writable{
 
     private int maxSize;
     private int size;
@@ -132,6 +135,22 @@ public class Fridge {
 
     public int getRemainingSpace() {
         return maxSize - size;
+    }
+
+	@Override
+	public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Fridge", foodToJson());
+        return json;
+	}
+
+    private JSONArray foodToJson() {
+    	JSONArray jsonArray = new JSONArray();
+
+        for (Food f : fridge) {
+            jsonArray.put(f.toJson());
+        }
+        return jsonArray;
     }
 
 }

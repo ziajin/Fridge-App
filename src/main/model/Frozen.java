@@ -1,5 +1,9 @@
 package model;
 
+import org.json.JSONObject;
+
+import netscape.javascript.JSObject;
+
 /*
  * represents a food type that is frozen, inheriting properties such as name, quantity
  * and expiry date from the Food superclass. The frozen class tracks whether the food is 
@@ -59,5 +63,11 @@ public class Frozen extends Food {
         return name + quantity + expiry + frozen;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = super.toJson();
+        json.put("Frozen", getFrozen());
+        return json;
+    }
 
 }

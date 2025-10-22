@@ -1,12 +1,16 @@
 package model;
 
+import org.json.JSONObject;
+
+import persistence.Writable;
+
 /*
  * represents a general food item with properties such as name, quantity, and the
  * days until the expiry. provides basic food methods for its subclasses (Frozen, Fruit) such as getters
  * and setters for the variables and a toString.
  */
 
-public class Food {
+public class Food implements Writable {
 
     protected int quantity;
     protected int expiryDate;
@@ -42,4 +46,13 @@ public class Food {
     public String toString() {
         return "Name: " + getName() + "\tQuantity: " + getQuantity() + "\tExpiry Date: " + getExpiryDate() + "\n";
     }
+
+	@Override
+	public JSONObject toJson() {
+		JSONObject json = new JSONObject();
+        json.put("Name", getName());
+        json.put("Quantity", getQuantity());
+        json.put("Expiry Date", getExpiryDate());
+        return json;
+	}
 }
