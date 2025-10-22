@@ -6,6 +6,7 @@ import model.Frozen;
 import model.Fruit;
 
 import java.io.*;
+import org.json.*;
 
 // constructs print writer to write fridge object to file
 
@@ -18,20 +19,28 @@ public class JsonWriter {
 
     //EFFECT: constructs writer to write to file
     public JsonWriter(String file) {
-        //stub
+        this.file = file;
     }
 
-    // MODIFIES: this
+    //MODIFIES: this
     //EFFECTS: constructs printwriter to the destination file, throws FileNotFoundException
     // if the file cannot be opened or found
     public void writeOn() throws FileNotFoundException {
-        //stub
+        writer = new PrintWriter(new File(file));
     }
 
     //MODIFIES: this
     //EFFECTS: writes JSON representation of fridge to file
-    public void write(Fridge f) {
-        //stub
+    public void writeToFile(Fridge f) {
+        JSONObject json = f.toJson();
+        String line = json.toString(tab);
+        writer.print(line);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: closees writer stream
+    public void close() {
+        writer.close();
     }
 
 }
