@@ -50,6 +50,7 @@ public class Food implements Writable {
 	@Override
 	public JSONObject toJson() {
 		JSONObject json = new JSONObject();
+        json.put("Type", "Food");
         json.put("Name", getName());
         json.put("Quantity", getQuantity());
         json.put("Expiry Date", getExpiryDate());

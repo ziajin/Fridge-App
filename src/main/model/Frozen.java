@@ -66,6 +66,7 @@ public class Frozen extends Food {
     @Override
     public JSONObject toJson() {
         JSONObject json = super.toJson();
+        json.put("Type", "Frozen");
         json.put("Frozen", getFrozen());
         return json;
     }

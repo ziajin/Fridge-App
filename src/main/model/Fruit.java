@@ -42,6 +42,7 @@ public class Fruit extends Food {
     @Override
     public JSONObject toJson() {
         JSONObject json = super.toJson();
+        json.put("Type", "Fruit");
         json.put("Ripe", isRipe());
         return json;
     }
