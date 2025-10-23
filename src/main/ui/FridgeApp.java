@@ -4,7 +4,10 @@ import model.Food;
 import model.Fridge;
 import model.Frozen;
 import model.Fruit;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -29,6 +32,7 @@ public class FridgeApp {
     private int quantity;
     private boolean ripe;
 
+    private String fileName = "./data/FridgeSave";
     
     private boolean open = true;
 
@@ -55,6 +59,7 @@ public class FridgeApp {
     //EFFECTS: Prints welcome message
     private void printWelcome() {
         System.out.println("Welcome to your Fridge!");
+        loadOrNew();
     }
 
     //EFFECTS: prints goodbye message
@@ -91,31 +96,68 @@ public class FridgeApp {
         } else if (input.equalsIgnoreCase("v3")) {
             displaySoonExpired();
         } else if (input.equalsIgnoreCase("q")) {
-            open = false;
-            printGoodbye();
+            saveOrQuit();
         }
     }
 
     //EFFECTS: asks user if they want to save the fridge 
     private void saveOrQuit() {
-        //stub
+        System.out.println("Do you want to save your fridge? (Y/N): ");
+        userInput = input.nextLine();
+
+        if ("y".equalsIgnoreCase(userInput)) {
+            writeFridge();
+            open = false;
+            printGoodbye();
+        } else if ("n".equalsIgnoreCase(userInput)) {
+            System.out.println("Succesfully quit! Did not save.");
+            open = false;
+        } else {
+            System.out.println("Invalid option. Please try again.");
+            saveOrQuit();
+        }
     }
 
     //EFFECTS: write to fridge if user chooses to save
     private void writeFridge() {
-        //stub
+        try {
+            JsonWriter write = new JsonWriter(fileName);
+            write.writeOn();
+            write.writeToFile(fridgeFoods);
+            write.close();
+            System.out.println("Succesfully saved!");
+        } catch (IOException e) {
+            System.out.println("Ran into an issue while saving.");
+        }
     }
 
     //MODIFIES: this
     //EFFECTS: load the saved fridge from file
     private void loadFridge() {
+        try {
 
+            JsonReader in = new JsonReader(fileName);
+            fridgeFoods = in.read();
+
+        } catch (IOException e) {
+            System.out.println("Error occurred during loading.");
+        }
     }
 
     //MODIFIES:this 
     //EFFECTS: ask the user whether to laod saved fridge or new fridge
     private void loadOrNew() {
-        //
+        System.out.println("Would you like to load the last saved fridge? (Y/N): ");
+        userInput = input.nextLine();
+
+        if ("y".equalsIgnoreCase(userInput)) {
+            loadFridge();
+        } else if ("n".equalsIgnoreCase(userInput)) {
+            System.out.println("Loading new, empty fridge!");
+        } else {
+            System.out.println("Invalid option. Please try again.");
+            loadOrNew();
+        }
     }
 
     //EFFECTS: creates food item
