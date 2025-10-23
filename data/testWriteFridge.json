@@ -1,0 +1,22 @@
+{"Fridge": [
+    {
+        "Type": "Food",
+        "Quantity": 1,
+        "Expiry Date": 10,
+        "Name": "milk"
+    },
+    {
+        "Type": "Frozen",
+        "Quantity": 3,
+        "Expiry Date": 40,
+        "Frozen": true,
+        "Name": "ice cream"
+    },
+    {
+        "Type": "Fruit",
+        "Quantity": 7,
+        "Expiry Date": 5,
+        "Ripe": false,
+        "Name": "apple"
+    }
+]}
