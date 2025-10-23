@@ -96,13 +96,37 @@ public class FridgeApp {
         }
     }
 
+    //EFFECTS: asks user if they want to save the fridge 
+    private void saveOrQuit() {
+        //stub
+    }
+
+    //EFFECTS: write to fridge if user chooses to save
+    private void writeFridge() {
+        //stub
+    }
+
+    //MODIFIES: this
+    //EFFECTS: load the saved fridge from file
+    private void loadFridge() {
+
+    }
+
+    //MODIFIES:this 
+    //EFFECTS: ask the user whether to laod saved fridge or new fridge
+    private void loadOrNew() {
+        //
+    }
+
     //EFFECTS: creates food item
     private Food createFood() {
         System.out.println("What category is this food?");
         System.out.println("1) General Food");
         System.out.println("2) Frozen Food");
         System.out.println("3) Fruit/Veg");
+
         userInput = input.nextLine();
+
         if (userInput.equalsIgnoreCase("1")) {
             return getParamters();
         } else if (userInput.equalsIgnoreCase("2")) {
