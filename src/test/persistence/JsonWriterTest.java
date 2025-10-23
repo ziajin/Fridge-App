@@ -2,6 +2,7 @@ package persistence;
 
 import org.junit.jupiter.api.Test;
 
+import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
 import model.Food;
 import model.Fridge;
 import model.Frozen;
@@ -14,6 +15,8 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+
+@ExcludeFromJacocoGeneratedReport
 
 public class JsonWriterTest extends JsonTest {
 
@@ -80,7 +83,7 @@ public class JsonWriterTest extends JsonTest {
 
         //test Writer
         try {
-            JsonWriter write = new JsonWriter(file);
+            JsonWriter write = new JsonWriter("./data/testWriteFridge.json");
             write.writeOn();
             write.writeToFile(f);
             write.close();
@@ -90,7 +93,7 @@ public class JsonWriterTest extends JsonTest {
 
         //check written contents
         try {
-            JsonReader read = new JsonReader(file);
+            JsonReader read = new JsonReader("./data/testWriteFridge.json");
             Fridge readFridge = read.read();
             List<Food> readIn = readFridge.getFridgeContents();
             assertEquals(3, readIn.size());
