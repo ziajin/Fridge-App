@@ -4,7 +4,6 @@ import model.Food;
 import model.Fridge;
 import model.Frozen;
 import model.Fruit;
-import netscape.javascript.JSObject;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -14,7 +13,9 @@ import java.util.stream.Stream;
 
 import org.json.*;
 
+// Based on the persistence package in the Workroom repo provided in phase 2
 // Reader that reads in fridge object from designated file
+
 public class JsonReader {
     private String file;
 

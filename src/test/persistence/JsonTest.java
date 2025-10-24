@@ -8,14 +8,11 @@ import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Based on the JsonTest class in the Workroom repo provided in phase 2
+
 @ExcludeFromJacocoGeneratedReport
 
 public class JsonTest {
-
-    // protected Food food = new Food("milk", 1, 10);
-    // protected Food frozen = new Frozen("ice cream", 3, 40, true);
-    // protected Food fruit = new Fruit("apple", 7, 0, false);
-    
 
     public void checkFood(String name, int quantity, int expiryDate, Food f) {
         assertEquals(name, f.getName());

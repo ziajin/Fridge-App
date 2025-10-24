@@ -16,6 +16,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 
+// Based on the ReaderTest in the Workroom repo provided in phase 2
+
 @ExcludeFromJacocoGeneratedReport
 
 public class JsonReaderTest extends JsonTest {

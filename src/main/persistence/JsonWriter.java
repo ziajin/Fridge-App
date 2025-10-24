@@ -8,6 +8,7 @@ import model.Fruit;
 import java.io.*;
 import org.json.*;
 
+// Based on the persistence package in the Workroom repo provided in phase 2
 // constructs print writer to write fridge object to file
 
 public class JsonWriter {
