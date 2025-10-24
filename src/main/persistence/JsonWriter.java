@@ -1,10 +1,6 @@
 package persistence;
 
-import model.Food;
 import model.Fridge;
-import model.Frozen;
-import model.Fruit;
-
 import java.io.*;
 import org.json.*;
 
