@@ -37,7 +37,7 @@ public class JsonReaderTest extends JsonTest {
     void testNonExistentFile() {
         JsonReader read = new JsonReader(file);
         try {
-            Fridge f = read.read();
+            read.read();
             fail("IOException expecteed");
         } catch (IOException e) {
             //expect exception
