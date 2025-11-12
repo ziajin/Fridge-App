@@ -1,0 +1,7 @@
+{"Fridge": [{
+    "Type": "Frozen",
+    "Quantity": 10,
+    "Expiry Date": 100,
+    "Frozen": true,
+    "Name": "ice"
+}]}
