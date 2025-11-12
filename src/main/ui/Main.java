@@ -1,11 +1,14 @@
 package ui;
 
+import javax.swing.SwingUtilities;
+
 import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
 
 @ExcludeFromJacocoGeneratedReport
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        FridgeApp fridgeApp = new FridgeApp();
+        // FridgeApp fridgeApp = new FridgeApp();
+        SwingUtilities.invokeLater(FridgeGUI::new);
     }
 }
