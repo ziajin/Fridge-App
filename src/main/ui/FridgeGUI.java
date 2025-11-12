@@ -62,7 +62,7 @@ public class FridgeGUI extends JFrame {
         main.setLayout(new BorderLayout());
 
         JLabel welcome = new JLabel("Fridge App", JLabel.CENTER);
-        welcome.setFont(new Font("Roboto Condensed", Font.PLAIN, 30));
+        welcome.setFont(new Font("Roboto Condensed", Font.BOLD, 40));
 
         JButton start = new JButton("Start");
         start.addActionListener(e -> start());
@@ -89,22 +89,30 @@ public class FridgeGUI extends JFrame {
     private JPanel setButtons() {
         JPanel buttonPanel = new JPanel(new FlowLayout());
 
-        JButton addButton = new JButton("Add Item");
+        JButton addButton = new JButton("Add Food");
         addButton.addActionListener(e -> addItem());
 
-            JButton removeButton = new JButton("Remove Item");
+        JButton addFrozenButton = new JButton("Add Frozen Food");
+        addFrozenButton.addActionListener(e -> addItemFreezer());
+
+        JButton removeButton = new JButton("Remove Item");
         removeButton.addActionListener(e -> removeItem());
 
-        JButton viewFridgeButton = new JButton("View Fridge");
-        viewFridgeButton.addActionListener(e -> viewFridge());
+        // JButton viewFridgeButton = new JButton("View Fridge");
+        // viewFridgeButton.addActionListener(e -> viewFridge());
 
-        JButton viewFreezerButton = new JButton("View Freezer");
-        viewFreezerButton.addActionListener(e -> viewFreezer());
+        // JButton viewFreezerButton = new JButton("View Freezer");
+        // viewFreezerButton.addActionListener(e -> viewFreezer());
 
-        buttonPanel.add(viewFreezerButton);
-        buttonPanel.add(viewFridgeButton);
+        JButton changeExpiry = new JButton("Change Expiry");
+        changeExpiry.addActionListener(e -> changeExpiryDate());
+
+        // buttonPanel.add(viewFreezerButton);
+        // buttonPanel.add(viewFridgeButton);
         buttonPanel.add(addButton);
+        buttonPanel.add(addFrozenButton);
         buttonPanel.add(removeButton);
+        buttonPanel.add(changeExpiry);
 
         return buttonPanel;
     }
@@ -112,12 +120,15 @@ public class FridgeGUI extends JFrame {
     //EFFECTS: sets up text area to display fridge contents
     private JScrollPane setFridgeDisplay() {
         fridgeContents = new JTextArea();
+        viewFridge();
         fridgeContents.setEditable(false);
         JScrollPane scroll = new JScrollPane(fridgeContents);
 
         return scroll;
     }
 
+    //EFFECTS: sets up panel with fridge and freezer display along with displaying
+    // the buttons panel. updates the main menu panel to the fridge panel.
     private void setUp() {
         JPanel panel = new JPanel(new BorderLayout());
 
@@ -128,26 +139,28 @@ public class FridgeGUI extends JFrame {
         tab.add("Freezer", setFreezerDisplay());
         panel.add(tab, BorderLayout.CENTER);
 
-        add(panel);
-        setVisible(true);
+        setContentPane(panel);
+        repaint();
+        setVisible(true);   
     }
 
+    //EFFEECTS: asks user whether or not to save fridge. if yes write fridge to file
+    // else discards. exits either way.
     private void save() {
         int save = JOptionPane.showConfirmDialog(this, "Save fridge?", "Confirm", JOptionPane.YES_NO_OPTION);
 
         if (save == JOptionPane.YES_OPTION) {
             writeFridge();
-            JOptionPane.showMessageDialog(this, "Saved!");
-            System.exit(0);
-            SwingUtilities.invokeLater(() -> System.exit(0));
-        } else {
-            System.exit(0);
         }
+
+        dispose();
+        System.exit(0);
     }
 
     //EFFECTS: sets up text area to display freezer contents
     private JScrollPane setFreezerDisplay() {
         freezerContents = new JTextArea();
+        viewFreezer();
         freezerContents.setEditable(false);
         JScrollPane scroll = new JScrollPane(freezerContents);
 
@@ -163,6 +176,29 @@ public class FridgeGUI extends JFrame {
 
         fridge.addItem(new Food(name, quantity, expiry));
         JOptionPane.showMessageDialog(this, "Added!");
+
+        viewFridge();
+    }
+
+    //MODIFIES: this
+    //EFFECTS: prompts user for values, creates food, adds to fridge
+    private void addItemFreezer() {
+        boolean frozen = false;
+
+        String name = JOptionPane.showInputDialog("Whats the food name?: ");
+        int quantity = Integer.parseInt(JOptionPane.showInputDialog("How many of this item?: "));
+        int expiry = Integer.parseInt(JOptionPane.showInputDialog("In how many days does this item expire?: "));
+
+        int result = JOptionPane.showConfirmDialog(this, "Is this item frozen?");
+
+        if (result == JOptionPane.YES_OPTION) {
+            frozen = true;
+        }
+
+        freezer.addItem(new Frozen(name, quantity, expiry, frozen));
+        JOptionPane.showMessageDialog(this, "Added!");
+
+        viewFreezer();
     }
 
     //MODIFIES: this
@@ -222,11 +258,29 @@ public class FridgeGUI extends JFrame {
     //MODIFIES: this
     //EFFECTS: changes item's expiry date
     private void changeExpiryDate() {
+        String name = JOptionPane.showInputDialog("What item would you like to change?: ");
+        viewFridge();
 
+        if (fridge.fridgeContains(name) != null) {
+
+            String[] options = {"Increase", "Decrease"};
+            int choice = JOptionPane.showOptionDialog(this, "Increase or decrease number of days until expiry?", "Change Expiry Date", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+            if (choice == 0) {
+                int days = Integer.parseInt(JOptionPane.showInputDialog("Change by how many days?: "));
+                fridge.changeExpiryDate(name, days);
+            } else if (choice == 1) {
+                int days = Integer.parseInt(JOptionPane.showInputDialog("Change by how many days?: "));
+                fridge.changeExpiryDate(name, days);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Item not found.");
+        }
+         
     }
 
     //MODIFIES: this
-    //EFFECTS: load the saved fridge from file
+    //EFFECTS: load the saved fridge and freezer from file
     private void loadFridge() {
         try {
 
@@ -241,19 +295,20 @@ public class FridgeGUI extends JFrame {
         }
     }
 
+
+    //EFFECTS: writes fridge and freezer to file
     private void writeFridge() {
         try {
 
             JsonWriter write = new JsonWriter(fileNameFridge);
             write.writeOn();
             write.writeToFile(fridge);
-
-            write = new JsonWriter(fileNameFreezer);
-            write.writeToFile(freezer);
-
             write.close();
 
-            System.out.println("Succesfully saved!");
+            JsonWriter write2 = new JsonWriter(fileNameFreezer);
+            write2.writeOn();
+            write2.writeToFile(freezer);
+            write2.close();
 
         } catch (IOException e) {
             System.out.println("Ran into an issue while saving.");
