@@ -2,8 +2,6 @@ package ui;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
-
 import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
 
 import java.awt.event.*;
@@ -18,8 +16,7 @@ import persistence.JsonWriter;
  * window. Allows user to interact with the digital fridge.
  */
 
- @ExcludeFromJacocoGeneratedReport
-
+@ExcludeFromJacocoGeneratedReport
 public class FridgeGUI extends JFrame {
 
     private Fridge fridge;
@@ -48,6 +45,7 @@ public class FridgeGUI extends JFrame {
         setVisible(true);
 
         addWindowListener(new WindowAdapter() {
+            @ExcludeFromJacocoGeneratedReport
             @Override
             public void windowClosing(WindowEvent e) {
                 save();
@@ -59,7 +57,13 @@ public class FridgeGUI extends JFrame {
     //EFFECTS: sets main menu before fridge interface. prompts user to load saved fridge or not
     private void mainMenu() {
         JPanel main = new JPanel();
-        main.setLayout(new BorderLayout());
+
+        ImageIcon backgroundImage = new ImageIcon("data\\double-door-refrigerator-icon-in-gray-color-vector.jpg");
+        Image scaled = backgroundImage.getImage().getScaledInstance(WIDTH, HEIGHT, Image.SCALE_SMOOTH);
+        ImageIcon scaledBackground = new ImageIcon(scaled);
+        JLabel background = new JLabel(scaledBackground);
+
+        background.setLayout(new BorderLayout());
 
         JLabel welcome = new JLabel("Fridge App", JLabel.CENTER);
         welcome.setFont(new Font("Roboto Condensed", Font.BOLD, 40));
@@ -67,14 +71,18 @@ public class FridgeGUI extends JFrame {
         JButton start = new JButton("Start");
         start.addActionListener(e -> start());
 
-        main.add(welcome);
-        main.add(start, BorderLayout.SOUTH);
+        background.add(welcome);
+        background.add(start, BorderLayout.SOUTH);
+
+        main.setLayout(new BorderLayout());
+        main.add(background);
 
         setContentPane(main);
         revalidate();
         repaint();
     }
 
+    //EFFECTS: popup ask if user wants to load saved fridge
     private void start() { 
         int load = JOptionPane.showConfirmDialog(this, "Load previously saved fridge?", "Confirm", JOptionPane.YES_NO_OPTION);
 
