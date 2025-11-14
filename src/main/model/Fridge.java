@@ -70,7 +70,7 @@ public class Fridge implements Writable{
         if (food == null) {
             return false;
         }
-        if (food.getExpiryDate() - Math.abs(days) < 0) {
+        if (food.getExpiryDate() + days < 0) {
             return false;
         } else { 
             food.setExpiryDate(food.getExpiryDate() + days);

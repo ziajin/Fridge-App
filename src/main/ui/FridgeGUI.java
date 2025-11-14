@@ -276,11 +276,19 @@ public class FridgeGUI extends JFrame {
 
             if (choice == 0) {
                 int days = Integer.parseInt(JOptionPane.showInputDialog("Change by how many days?: "));
-                fridge.changeExpiryDate(name, days);
+                if (fridge.changeExpiryDate(name, days)) {
+                    JOptionPane.showMessageDialog(this, "Date changed succesfully!");
+                }
+
             } else if (choice == 1) {
                 int days = Integer.parseInt(JOptionPane.showInputDialog("Change by how many days?: "));
-                fridge.changeExpiryDate(name, days);
+                if (fridge.changeExpiryDate(name, -days)) {
+                    JOptionPane.showMessageDialog(this, "Date changed succesfully!");
+                }
             }
+
+            viewFridge();
+
         } else {
             JOptionPane.showMessageDialog(this, "Item not found.");
         }
