@@ -19,3 +19,12 @@ This application is designed for anyone who struggles with keeping track of what
 
  - As a user I want the choice to save my fridge with all food items remaining in the same state to file
  - As a user I want the option to load my fridge and see my fridge in the same state from file
+
+ # Instructions for End User
+
+ - You can view the panel that displays the Xs that have already been added to the Y by: to view the food that has been added to the fridge/freezer, click on the respective tabs
+- You can generate the first required action related to the user story "adding multiple Xs to a Y" by: clicking on the button to add food
+- You can generate the second required action related to the user story "adding multiple Xs to a Y" by: clicking on the button to remove food or change  the expiry date
+- You can locate my visual component by: the background of the start page and the background of the tabs
+- You can save the state of my application by: closing the application will prompt the user to save the fridge or not
+- You can reload the state of my application by: by pressing the start button, the app will prompt the user to either load or start a new fridge.
