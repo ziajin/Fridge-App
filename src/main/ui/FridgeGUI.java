@@ -2,6 +2,8 @@ package ui;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+
 import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
 
 import java.awt.event.*;
@@ -29,6 +31,9 @@ public class FridgeGUI extends JFrame {
 
     private final int WIDTH = 500;
     private final int HEIGHT = 700;
+
+    private Image backgroundInside;
+    private Image backgroundOutside;
 
 
     public FridgeGUI() {
@@ -66,15 +71,24 @@ public class FridgeGUI extends JFrame {
         background.setLayout(new BorderLayout());
 
         JLabel welcome = new JLabel("Fridge App", JLabel.CENTER);
-        welcome.setFont(new Font("Roboto Condensed", Font.BOLD, 40));
+         welcome.setFont(new Font("Cooper Black", Font.BOLD, 40));
+        welcome.setForeground(new Color(255, 255, 255));
 
         JButton start = new JButton("Start");
+        start.setBackground(new Color(173, 216, 230));
+        start.setFont(new Font("Cooper Black", Font.BOLD, 30));
+        start.setAlignmentX(CENTER_ALIGNMENT);
         start.addActionListener(e -> start());
 
-        background.add(welcome);
-        background.add(start, BorderLayout.SOUTH);
+        JPanel startPanel = new JPanel();
+        startPanel.setOpaque(false);
+        startPanel.setLayout(new BoxLayout(startPanel, BoxLayout.Y_AXIS));
+        startPanel.add((Box.createVerticalStrut(400)));
+        startPanel.add(start);
 
-        main.setLayout(new BorderLayout());
+        background.add(welcome, BorderLayout.NORTH);
+        background.add(startPanel, BorderLayout.CENTER);
+
         main.add(background);
 
         setContentPane(main);
@@ -106,17 +120,12 @@ public class FridgeGUI extends JFrame {
         JButton removeButton = new JButton("Remove Item");
         removeButton.addActionListener(e -> removeItem());
 
-        // JButton viewFridgeButton = new JButton("View Fridge");
-        // viewFridgeButton.addActionListener(e -> viewFridge());
-
-        // JButton viewFreezerButton = new JButton("View Freezer");
-        // viewFreezerButton.addActionListener(e -> viewFreezer());
-
         JButton changeExpiry = new JButton("Change Expiry");
         changeExpiry.addActionListener(e -> changeExpiryDate());
 
         // buttonPanel.add(viewFreezerButton);
         // buttonPanel.add(viewFridgeButton);
+        buttonPanel.setOpaque(false);
         buttonPanel.add(addButton);
         buttonPanel.add(addFrozenButton);
         buttonPanel.add(removeButton);
@@ -130,7 +139,12 @@ public class FridgeGUI extends JFrame {
         fridgeContents = new JTextArea();
         viewFridge();
         fridgeContents.setEditable(false);
+        fridgeContents.setOpaque(false);
+        fridgeContents.setBackground(new Color(0, 0, 0, 0));
+
         JScrollPane scroll = new JScrollPane(fridgeContents);
+        scroll.getViewport().setOpaque(false);
+        scroll.setOpaque(false);
 
         return scroll;
     }
@@ -138,16 +152,51 @@ public class FridgeGUI extends JFrame {
     //EFFECTS: sets up panel with fridge and freezer display along with displaying
     // the buttons panel. updates the main menu panel to the fridge panel.
     private void setUp() {
-        JPanel panel = new JPanel(new BorderLayout());
+        ImageIcon fridgeInside = new ImageIcon("data\\inside.png");
+        backgroundInside = fridgeInside.getImage().getScaledInstance(WIDTH, HEIGHT, Image.SCALE_SMOOTH);
 
-        panel.add(setButtons(), BorderLayout.NORTH);
+        JPanel background1 = new JPanel(new BorderLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(backgroundInside, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+
+        background1.setOpaque(false);
+        background1.add(setFridgeDisplay(), BorderLayout.CENTER);
+        
+        JPanel background2 = new JPanel(new BorderLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(backgroundInside, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+
+        background2.setOpaque(false);
+        background2.add(setFreezerDisplay(), BorderLayout.CENTER);
 
         JTabbedPane tab = new JTabbedPane();
-        tab.add("Fridge", setFridgeDisplay());
-        tab.add("Freezer", setFreezerDisplay());
+        tab.addTab("Fridge", background1);
+        tab.addTab("Freezer", background2);
+
+        for (int i = 0; i < tab.getTabCount(); i++) {
+            Component c = tab.getComponentAt(i);
+            if (c instanceof JComponent) {
+                JComponent jc = (JComponent) c;
+                jc.setOpaque(false);
+                jc.setBackground(new Color(0,0,0,0));
+            }
+        }
+
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setOpaque(false);
+        panel.add(setButtons(), BorderLayout.NORTH);
         panel.add(tab, BorderLayout.CENTER);
 
         setContentPane(panel);
+        revalidate();
         repaint();
         setVisible(true);   
     }
@@ -169,8 +218,15 @@ public class FridgeGUI extends JFrame {
     private JScrollPane setFreezerDisplay() {
         freezerContents = new JTextArea();
         viewFreezer();
+
         freezerContents.setEditable(false);
+        freezerContents.setOpaque(false);
+        freezerContents.setBackground(new Color(0, 0, 0, 0));
+
         JScrollPane scroll = new JScrollPane(freezerContents);
+
+        scroll.getViewport().setOpaque(false);
+        scroll.setOpaque(false);
 
         return scroll;
     }
@@ -233,8 +289,9 @@ public class FridgeGUI extends JFrame {
 
     //EFFECTS: prints out contents of fridge onto panel
     private void viewFridge() {
+        fridgeContents.setFont(new Font("Chalkboard", Font.PLAIN, 30));
         fridgeContents.setText("");
-        fridgeContents.append("Fridge Contents: \n");
+        fridgeContents.append("\n\nFridge Contents: \n");
 
 
         for (Food f : fridge.getFridgeContents()) {
