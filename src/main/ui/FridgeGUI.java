@@ -29,8 +29,8 @@ public class FridgeGUI extends JFrame {
     private String fileNameFridge = "./data/FridgeSave";
     private String fileNameFreezer = "./data/FreezerSave";
 
-    private final int WIDTH = 500;
-    private final int HEIGHT = 700;
+    private static final int WIDTH = 500;
+    private static final int HEIGHT = 700;
 
     private Image backgroundInside;
     private Image backgroundOutside;
@@ -61,18 +61,11 @@ public class FridgeGUI extends JFrame {
     //MODIFIES: this
     //EFFECTS: sets main menu before fridge interface. prompts user to load saved fridge or not
     private void mainMenu() {
-        JPanel main = new JPanel();
-
-        ImageIcon backgroundImage = new ImageIcon("data\\double-door-refrigerator-icon-in-gray-color-vector.jpg");
-        Image scaled = backgroundImage.getImage().getScaledInstance(WIDTH, HEIGHT, Image.SCALE_SMOOTH);
-        ImageIcon scaledBackground = new ImageIcon(scaled);
-        JLabel background = new JLabel(scaledBackground);
-
+        JLabel background = new JLabel(getImage(("data\\double-door-refrigerator-icon-in-gray-color-vector.jpg")));
         background.setLayout(new BorderLayout());
 
         JLabel welcome = new JLabel("Fridge App", JLabel.CENTER);
-         welcome.setFont(new Font("Cooper Black", Font.BOLD, 40));
-        welcome.setForeground(new Color(255, 255, 255));
+        welcome.setFont(new Font("Cooper Black", Font.BOLD, 40));
 
         JButton start = new JButton("Start");
         start.setBackground(new Color(173, 216, 230));
@@ -89,6 +82,7 @@ public class FridgeGUI extends JFrame {
         background.add(welcome, BorderLayout.NORTH);
         background.add(startPanel, BorderLayout.CENTER);
 
+        JPanel main = new JPanel();
         main.add(background);
 
         setContentPane(main);
@@ -96,9 +90,18 @@ public class FridgeGUI extends JFrame {
         repaint();
     }
 
+    //MODIFIES: helper method to get image icon from file path
+    private ImageIcon getImage(String file) {
+        ImageIcon backgroundImage = new ImageIcon("data\\double-door-refrigerator-icon-in-gray-color-vector.jpg");
+        backgroundOutside = backgroundImage.getImage().getScaledInstance(WIDTH, HEIGHT, Image.SCALE_SMOOTH);
+        ImageIcon scaledBackground = new ImageIcon(backgroundOutside);
+        return scaledBackground;
+    }
+
     //EFFECTS: popup ask if user wants to load saved fridge
     private void start() { 
-        int load = JOptionPane.showConfirmDialog(this, "Load previously saved fridge?", "Confirm", JOptionPane.YES_NO_OPTION);
+        String msg = "Load previously saved fridge?";
+        int load = JOptionPane.showConfirmDialog(this, msg, "Load", JOptionPane.YES_NO_OPTION);
 
         if (load == JOptionPane.YES_OPTION) {
             loadFridge();
@@ -138,6 +141,9 @@ public class FridgeGUI extends JFrame {
     private JScrollPane setFridgeDisplay() {
         fridgeContents = new JTextArea();
         viewFridge();
+        fridgeContents.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        fridgeContents.setLineWrap(true);
+        fridgeContents.setWrapStyleWord(true);
         fridgeContents.setEditable(false);
         fridgeContents.setOpaque(false);
         fridgeContents.setBackground(new Color(0, 0, 0, 0));
@@ -149,33 +155,31 @@ public class FridgeGUI extends JFrame {
         return scroll;
     }
 
+
+    //EFFECTS: helper method to override paintComponent and setup background img
+    private JPanel setPanel(Image img, JScrollPane scroll) {
+        JPanel panel = new JPanel(new BorderLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+
+        panel.setOpaque(false);
+        panel.add(scroll, BorderLayout.CENTER);
+
+        return panel;
+    }
+
     //EFFECTS: sets up panel with fridge and freezer display along with displaying
     // the buttons panel. updates the main menu panel to the fridge panel.
     private void setUp() {
         ImageIcon fridgeInside = new ImageIcon("data\\inside.png");
         backgroundInside = fridgeInside.getImage().getScaledInstance(WIDTH, HEIGHT, Image.SCALE_SMOOTH);
 
-        JPanel background1 = new JPanel(new BorderLayout()) {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(backgroundInside, 0, 0, getWidth(), getHeight(), this);
-            }
-        };
-
-        background1.setOpaque(false);
-        background1.add(setFridgeDisplay(), BorderLayout.CENTER);
-        
-        JPanel background2 = new JPanel(new BorderLayout()) {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(backgroundInside, 0, 0, getWidth(), getHeight(), this);
-            }
-        };
-
-        background2.setOpaque(false);
-        background2.add(setFreezerDisplay(), BorderLayout.CENTER);
+        JPanel background1 = setPanel(backgroundInside, setFridgeDisplay());
+        JPanel background2 = setPanel(backgroundInside, setFreezerDisplay());
 
         JTabbedPane tab = new JTabbedPane();
         tab.addTab("Fridge", background1);
@@ -269,10 +273,24 @@ public class FridgeGUI extends JFrame {
     //EFFECTS: removes specified qauntity from specified item in fridge. if all quantities of the 
     // item is removed, remove the item entirely.
     private void removeItem() {
+        String[] options = {"Fridge", "Freezer"};
+        String m = "Where is the item you want to remove?";
+        String t = "Remove Item";
+
+        int choice = JOptionPane.showOptionDialog(
+                this, m, t, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
         String name = JOptionPane.showInputDialog("What item would you like to remove?: ");
 
-        viewFridge();
+        if (choice == 0) {
+            removeFridge(name);
+        } else if (choice == 1) {
+            removeFreezer(name);
+        }
 
+    }
+
+    private void removeFridge(String name) {
         Food temp = fridge.fridgeContains(name);
 
         if (temp != null) {
@@ -280,29 +298,44 @@ public class FridgeGUI extends JFrame {
             String msg = "How many of this item would you like to remove?\n" + "Current: " + temp.getQuantity();
             int quantity = Integer.parseInt(JOptionPane.showInputDialog(msg));
             fridge.decreaseQuantity(temp, quantity);
+            JOptionPane.showMessageDialog(this, "Removed: " + quantity + " of name");
+            viewFridge();
 
         } else {
             JOptionPane.showMessageDialog(this, "Item not found.");
         }
-
     }
+
+    private void removeFreezer(String name) {
+        Food temp = freezer.fridgeContains(name);
+
+        if (temp != null) {
+
+            String msg = "How many of this item would you like to remove?\n" + "Current: " + temp.getQuantity();
+            int quantity = Integer.parseInt(JOptionPane.showInputDialog(msg));
+            freezer.decreaseQuantity(temp, quantity);
+            JOptionPane.showMessageDialog(this, "Removed: " + quantity + " of name");
+            viewFreezer();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Item not found.");
+        }
+    }
+
 
     //EFFECTS: prints out contents of fridge onto panel
     private void viewFridge() {
-        fridgeContents.setFont(new Font("Chalkboard", Font.PLAIN, 30));
         fridgeContents.setText("");
-        fridgeContents.append("\n\nFridge Contents: \n");
-
+        fridgeContents.append("\n\n     Fridge Contents: \n");
 
         for (Food f : fridge.getFridgeContents()) {
-
             String name = f.getName();
             int quantity = f.getQuantity();
             int expiry = f.getExpiryDate();
-
             fridgeContents.append("Name: " + name + " Quantity: " + quantity + " Expiry Date: " + expiry + "\n");
         }
     }
+
 
     // EFFECTS: prints out contents of freezer onto panel
     private void viewFreezer() {
@@ -320,16 +353,19 @@ public class FridgeGUI extends JFrame {
 
     }
 
+
     //MODIFIES: this
     //EFFECTS: changes item's expiry date
     private void changeExpiryDate() {
         String name = JOptionPane.showInputDialog("What item would you like to change?: ");
-        viewFridge();
 
         if (fridge.fridgeContains(name) != null) {
 
             String[] options = {"Increase", "Decrease"};
-            int choice = JOptionPane.showOptionDialog(this, "Increase or decrease number of days until expiry?", "Change Expiry Date", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            String m = "Increase or decrease number of days until expiry?";
+            String t = "Change Expiry Date";
+            int choice = JOptionPane.showOptionDialog(
+                    this, m, t, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 
             if (choice == 0) {
                 int days = Integer.parseInt(JOptionPane.showInputDialog("Change by how many days?: "));
@@ -351,6 +387,7 @@ public class FridgeGUI extends JFrame {
         }
          
     }
+
 
     //MODIFIES: this
     //EFFECTS: load the saved fridge and freezer from file
