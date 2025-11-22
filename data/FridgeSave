@@ -1,1 +1,14 @@
-{"Fridge": []}
+{"Fridge": [
+    {
+        "Type": "Food",
+        "Quantity": 10,
+        "Expiry Date": 8,
+        "Name": "miilk"
+    },
+    {
+        "Type": "Food",
+        "Quantity": 10,
+        "Expiry Date": 2,
+        "Name": "apple"
+    }
+]}
