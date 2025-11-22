@@ -68,6 +68,7 @@ public class FridgeGUI extends JFrame {
 
         JLabel welcome = new JLabel("Fridge App", JLabel.CENTER);
         welcome.setFont(new Font("Cooper Black", Font.BOLD, 40));
+        welcome.setBorder(BorderFactory.createEmptyBorder(150, 0, 0, 0));
 
         JButton start = new JButton("Start");
         start.setBackground(new Color(173, 216, 230));
@@ -78,7 +79,7 @@ public class FridgeGUI extends JFrame {
         JPanel startPanel = new JPanel();
         startPanel.setOpaque(false);
         startPanel.setLayout(new BoxLayout(startPanel, BoxLayout.Y_AXIS));
-        startPanel.add((Box.createVerticalStrut(400)));
+        startPanel.add((Box.createVerticalStrut(200)));
         startPanel.add(start);
 
         background.add(welcome, BorderLayout.NORTH);
