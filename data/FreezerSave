@@ -8,9 +8,16 @@
     },
     {
         "Type": "Frozen",
-        "Quantity": 32,
+        "Quantity": 1,
         "Expiry Date": 12,
         "Frozen": true,
         "Name": "cream 2"
+    },
+    {
+        "Type": "Frozen",
+        "Quantity": 6,
+        "Expiry Date": 56,
+        "Frozen": true,
+        "Name": "meat"
     }
 ]}
