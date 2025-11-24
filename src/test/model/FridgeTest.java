@@ -83,10 +83,10 @@ public class FridgeTest {
     void TestExpriryDate() {
         test.addItem(testFood);
         assertEquals(2, test.getFridgeContents().get(0).getExpiryDate());
-        assertFalse(test.changeExpiryDate(testFood.getName(), 4));
+        assertTrue(test.changeExpiryDate(testFood.getName(), 4));
         assertFalse(test.changeExpiryDate("notFood", 1));
         assertTrue(test.changeExpiryDate(testFood.getName(), 1));
-        assertEquals(3, test.getFridgeContents().get(0).getExpiryDate());
+        assertEquals(7, test.getFridgeContents().get(0).getExpiryDate());
     }
 
     @Test

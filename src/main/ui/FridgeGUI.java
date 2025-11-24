@@ -215,6 +215,7 @@ public class FridgeGUI extends JFrame {
     private JPanel setPanel(Image img, JScrollPane scroll) {
         JPanel panel = new JPanel(new BorderLayout()) {
             @Override
+            @ExcludeFromJacocoGeneratedReport
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
