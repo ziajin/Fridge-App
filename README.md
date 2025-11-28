@@ -28,3 +28,22 @@ This application is designed for anyone who struggles with keeping track of what
 - You can locate my visual component by: the background of the start page and the background of the tabs
 - You can save the state of my application by: closing the application will prompt the user to save the fridge or not
 - You can reload the state of my application by: by pressing the start button, the app will prompt the user to either load or start a new fridge.
+
+# Phase 4
+
+## Task 2
+
+`Sample Event Log Output`
+
+Thu Nov 27 20:33:40 PST 2025
+Added food: milk Quantity: 2
+Thu Nov 27 20:33:51 PST 2025
+Added food: ice cube Quantity: 10
+Thu Nov 27 20:34:10 PST 2025
+Changed expiry date of ice cube by 20
+Thu Nov 27 20:34:21 PST 2025
+Changed quantity of milk by 1
+Thu Nov 27 20:36:20 PST 2025
+Saved.
+Thu Nov 27 20:36:20 PST 2025
+Saved.
