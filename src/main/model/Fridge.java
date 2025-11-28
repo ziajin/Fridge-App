@@ -10,7 +10,7 @@ import persistence.Writable;
  * of methods such as add/remove item, change expiry date, view contents of the ArrayList, etc.
  */
 
-public class Fridge implements Writable{
+public class Fridge implements Writable {
 
     private int maxSize;
     private int size;
@@ -137,12 +137,12 @@ public class Fridge implements Writable{
         return maxSize - size;
     }
 
-	@Override
-	public JSONObject toJson() {
+    @Override
+public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("Fridge", foodToJson());
         return json;
-	}
+    }
 
     private JSONArray foodToJson() {
     	JSONArray jsonArray = new JSONArray();

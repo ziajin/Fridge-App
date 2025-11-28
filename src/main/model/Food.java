@@ -47,13 +47,13 @@ public class Food implements Writable {
         return "Name: " + getName() + "\tQuantity: " + getQuantity() + "\tExpiry Date: " + getExpiryDate() + "\n";
     }
 
-	@Override
+    @Override
 	public JSONObject toJson() {
-		JSONObject json = new JSONObject();
+	JSONObject json = new JSONObject();
         json.put("Type", "Food");
         json.put("Name", getName());
         json.put("Quantity", getQuantity());
         json.put("Expiry Date", getExpiryDate());
         return json;
-	}
+    }
 }
