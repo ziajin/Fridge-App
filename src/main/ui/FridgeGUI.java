@@ -7,6 +7,8 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
+import model.Event;
+import model.EventLog;
 
 import java.awt.event.*;
 import java.io.IOException;
@@ -271,6 +273,10 @@ public class FridgeGUI extends JFrame {
             writeFridge();
         }
 
+        for (Event e : EventLog.getInstance()) {
+            System.out.println(e.toString());
+        }
+
         dispose();
         System.exit(0);
     }
@@ -520,4 +526,5 @@ public class FridgeGUI extends JFrame {
             System.out.println("Ran into an issue while saving.");
         }
     }
+
 }
