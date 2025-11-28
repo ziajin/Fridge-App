@@ -8,7 +8,6 @@ import javax.swing.text.StyledDocument;
 
 import ca.ubc.cs.ExcludeFromJacocoGeneratedReport;
 import model.Event;
-import model.EventLog;
 
 import java.awt.event.*;
 import java.io.IOException;
@@ -26,7 +25,7 @@ import persistence.JsonWriter;
 public class FridgeGUI extends JFrame {
 
     private Fridge fridge;
-    private Fridge freezer;
+    private Fridge freezer; 
     private JTextPane fridgeContents;
     private JTextPane freezerContents;
 
@@ -288,7 +287,17 @@ public class FridgeGUI extends JFrame {
         int quantity = Integer.parseInt(JOptionPane.showInputDialog("How many of this item?: "));
         int expiry = Integer.parseInt(JOptionPane.showInputDialog("In how many days does this item expire?: "));
 
-        fridge.addItem(new Food(name, quantity, expiry));
+        int result = JOptionPane.showConfirmDialog(this, "Is this item a fruit?");
+
+        boolean ripe = false;
+
+        if (result == JOptionPane.YES_OPTION) {
+            ripe = true;
+            fridge.addItem(new Fruit(name, quantity, expiry, ripe));
+        } else {
+            fridge.addItem(new Food(name, quantity, expiry));
+        }
+        
         JOptionPane.showMessageDialog(this, "Added!");
 
         updateFridge();
