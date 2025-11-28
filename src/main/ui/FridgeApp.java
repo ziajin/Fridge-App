@@ -180,41 +180,6 @@ public class FridgeApp {
         }
     }
 
-    /*
-     * REQUIRES: valid input from the user, name not empty, quantity > 0, expiry date > 0
-     * MODIFIES: this
-     * EFFECTS: takes user input to create a valid food object
-     */
-    // private Food getParametersFood() {
-    //     while (true) {
-    //         try {
-    //             System.out.println("What is the foods name?: ");
-    //             name = input.nextLine();
-    //                 if (name.isBlank()) {
-    //                     System.out.println("Name is empty. Try again. \n");
-    //                     continue;
-    //                 }
-    //             System.out.println("How many of this item?: ");
-    //             quantity = input.();
-    //                 if (quantity <= 0) {
-    //                     System.out.println("Quantity cannot be zero. Try again. \n");
-    //                     input.nextLine();
-    //                     continue;
-    //                 }
-    //             System.out.println("In how many days does this item expire?: ");
-    //             expiry = input.nextInt();
-    //                 if (expiry < 0) {
-    //                     System.out.println("Expiry days cannot be negative. Try again. \n");
-    //                     continue;
-    //                 }
-    //             input.nextLine();
-    //             break;
-    //     } catch (InputMismatchException e) {
-    //         System.out.println("Invalid input. Try again.");
-    //         }
-    //     }
-    // }
-
     private Food getParamters() {
         while (true) {
             try {
@@ -380,14 +345,5 @@ public class FridgeApp {
     private void viewFreezer() {
         System.out.print(freezerFoods.getFridgeContents());
     }
-
-    //EFFECTS: prints out fridge contents but only fruit
-    // private void viewFruit() {
-    //     for (Food f : fridgeFoods.getFridgeContents()) {
-    //         if (f instanceof Fruit) {
-    //             System.out.println(f);
-    //         }
-    //     }
-    // }
      
 }
