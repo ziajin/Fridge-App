@@ -1,14 +1,6 @@
-{"Fridge": [
-    {
-        "Type": "Food",
-        "Quantity": 10,
-        "Expiry Date": 6,
-        "Name": "apple"
-    },
-    {
-        "Type": "Food",
-        "Quantity": 2,
-        "Expiry Date": 10,
-        "Name": "egg "
-    }
-]}
+{"Fridge": [{
+    "Type": "Food",
+    "Quantity": 1,
+    "Expiry Date": 10,
+    "Name": "milk"
+}]}

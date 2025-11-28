@@ -39,7 +39,7 @@ public class Fridge implements Writable {
             fridge.add(food);
         }
         size += food.getQuantity();
-        EventLog.getInstance().logEvent(new Event("Added item: " + food.getName() ));
+        EventLog.getInstance().logEvent(new Event("Added food: " + food.getName() + " Quantity: " + food.getQuantity()));
         return true;
     }
 
@@ -138,6 +138,7 @@ public JSONObject toJson() {
         for (Food f : fridge) {
             jsonArray.put(f.toJson());
         }
+        EventLog.getInstance().logEvent(new Event("Saved."));
         return jsonArray;
     }
 
