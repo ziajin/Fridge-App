@@ -39,6 +39,7 @@ public class Fridge implements Writable {
             fridge.add(food);
         }
         size += food.getQuantity();
+        EventLog.getInstance().logEvent(new Event("Added item: " + food.getName() ));
         return true;
     }
 
@@ -56,6 +57,7 @@ public class Fridge implements Writable {
                 return false;
             }
             decreaseQuantity(food, quantity);
+            EventLog.getInstance().logEvent(new Event("Removed " + food.getName()));
             return true;
         } else {
             return false;
@@ -74,6 +76,7 @@ public class Fridge implements Writable {
             return false;
         } else { 
             food.setExpiryDate(food.getExpiryDate() + days);
+            EventLog.getInstance().logEvent(new Event("Changed expiry date of " + food.getName() + " by " + days));
             return true;
         }
     }
@@ -105,25 +108,10 @@ public class Fridge implements Writable {
             if (food.getQuantity() == 0) {
                 fridge.remove(food);
             }
-        } //throw exception?    
+
+            EventLog.getInstance().logEvent(new Event("Changed quantity of " + food.getName() + " by " + quantity));
+        }  
     }
-
-    /*
-     * REQUIRES: name of valid food in fridge and quantity >0
-     * MODIFIES: this
-     * EFFECTS: decreases the quantity variable of a certain food
-     */
-    // public void decreaseQuantity(String name, int quantity) {
-    //     Food food = fridgeContains(name);
-    //     if (food.getQuantity() >= quantity) {
-    //         food.setQuantity(food.getQuantity() - quantity);
-    //         size -= quantity;
-
-    //         if (food.getQuantity() == 0) {
-    //             fridge.remove(food);
-    //         }
-    //     } //throw exception?    
-    // }
 
     public ArrayList<Food> getFridgeContents() {
         return fridge;
