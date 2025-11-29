@@ -47,3 +47,7 @@ Thu Nov 27 20:36:20 PST 2025
 Saved.
 Thu Nov 27 20:36:20 PST 2025
 Saved.
+
+## Task 3
+
+  If I had more time for my project I would have designed the fruit and frozen classes to have more functionality. They simply do not do much other than letting the user categorize their items between a fridge, freezer, and whether it is a fruit or not. Given more time I would have liked to implement features regarding the ripeness and expiry date and having them effect each others state. I also would add more food types. Furthermore, if I had more subclasses, I think my food class should have been redesigned into an abstract food class. My fridge class could have also been split into a functioanlity and a collection class. Currently I feel that my fridge class is unorganized and messy and dividing the functions into two seperate classes would not only improve the aesthetics but also make any further additions easier.
