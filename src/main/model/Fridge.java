@@ -39,7 +39,7 @@ public class Fridge implements Writable {
             fridge.add(food);
         }
         size += food.getQuantity();
-        EventLog.getInstance().logEvent(new Event("Added food: " + food.getName() + " Quantity: " + food.getQuantity()));
+        EventLog.getInstance().logEvent(new Event("Added food:" + food.getName() + " Quantity: " + food.getQuantity()));
         return true;
     }
 
